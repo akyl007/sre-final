@@ -3,11 +3,12 @@ from pydantic import BaseModel
 from typing import Optional
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from prometheus_fastapi_instrumentator import Instrumentator
 import uvicorn
 import os
 
 app = FastAPI()
-
+Instrumentator().instrument(app).expose(app)
 # Подключение папки со статикой
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
