@@ -2,18 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>FastAPI is Live</title>
-  <style>
-    body { font-family: sans-serif; padding: 2rem; background: #f4f4f4; }
-    h1 { color: #2c3e50; }
-  </style>
+  <title>CORS Test Page</title>
 </head>
 <body>
   <h1>🚀 FastAPI Backend Deployed Successfully!</h1>
   <p>You can now access API endpoints:</p>
   <ul>
-    <li><a href="/health">GET /health</a></li>
-    <li><a href="/api/v1/message">GET /api/v1/message</a></li>
+    <li>GET <code>/health</code></li>
+    <li>GET <code>/api/v1/message</code></li>
   </ul>
+
+  <hr>
+
+  <h2>🔐 CORS Test</h2>
+  <button onclick="testCORS()">Send Request to Backend</button>
+  <pre id="result" style="background: #eee; padding: 1em;"></pre>
+
+  <script>
+    function testCORS() {
+      fetch("https://sre-final-fastapi.onrender.com/api/v1/message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ content: "Test message", sender: "CORS Checker" })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+      })
+      .catch(err => {
+        document.getElementById("result").textContent = "CORS Error: " + err;
+        console.error(err);
+      });
+    }
+  </script>
 </body>
 </html>
