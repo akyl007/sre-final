@@ -22,7 +22,8 @@ class Message(BaseModel):
     content: str
     sender: Optional[str] = "Anonymous"
 
-@app.get("/health")
+# Исправлено: разрешён HEAD-запрос для мониторинга
+@app.api_route("/health", methods=["GET", "HEAD"])
 async def health_check():
     return {"status": "ok"}
 
